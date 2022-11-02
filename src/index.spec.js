@@ -106,8 +106,10 @@ describe('Проверяем функцию валидации ИНН', () => {
     it('Проверяем не верный 12 значный ИНН по контрольной сумме', () => {
         expect(testFunction(getInnBadCRCPos(getInn12()) )).toBeFalsy();
         expect(testFunction(getInnBadCRCPos(getInn12_zero()) )).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zerozero()) )).toBeFalsy();
         expect(testFunction(getInnBadCRCPos(getInn12(), -2))).toBeFalsy();
         expect(testFunction(getInnBadCRCPos(getInn12_zero2(), -2))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zerozero(), -2))).toBeFalsy();
     });
 
     it('Проверяем не верный ИНН по длине', () => {

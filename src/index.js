@@ -1,8 +1,11 @@
 export const testFunction = (inn) => {
     const innStr = String(inn)       
+    if(!isIntegerString(innStr)) {
+      return false
+    }
     
-    if(innStr.length != 10 && innStr.length != 12 && !isIntegerString(innStr)) {        
-        return false
+    if(innStr.length != 10 && innStr.length != 12) {        
+      return false
     }
     
     if(innStr.length == 10) {
