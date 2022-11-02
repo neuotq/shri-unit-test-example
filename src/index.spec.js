@@ -57,9 +57,6 @@ const getInnBadCRCPos = (inn, pos = -1) =>
  {
     const innStr = String(inn)    
     const newCrc = String( parseInt(innStr.at(pos)) + 1 )
-    console.log(innStr)
-    console.log(innStr.substring(0, pos) +  newCrc +  innStr.substring(pos + 1))
-    // return innStr.replace(/.$/,newCrc)
     return innStr.substring(0, pos) +
         newCrc +
         innStr.substring(pos + 1);
