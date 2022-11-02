@@ -41,7 +41,7 @@ const goodInn12_zero2 = [
 ]
 
 
-const goodInn12_zerozero = [
+const goodInn12_zeroZero = [
     549737680900
 ]
 
@@ -53,10 +53,10 @@ function getRandomInt(max) {
 const getInn10 = () => goodInn10_nonzero[getRandomInt(goodInn10_nonzero.length)]
 const getInn10_zero = () => goodInn10_zero[getRandomInt(goodInn10_zero.length)]
 
-const getInnBadCRCPos = (inn, pos = -1) => 
+const getInnBadCRCPos = (inn, pos = 0) => 
  {
     const innStr = String(inn)    
-    const newCrc = String( parseInt(innStr.at(pos)) + 1 )
+    const newCrc = String( parseInt(innStr.charAt(pos)) + 1 )
     return innStr.substring(0, pos) +
         newCrc +
         innStr.substring(pos + 1);
@@ -65,7 +65,7 @@ const getInnBadCRCPos = (inn, pos = -1) =>
 const getInn12 = () => goodInn12_nonzero[getRandomInt(goodInn12_nonzero.length)]
 const getInn12_zero = () => goodInn12_zero[getRandomInt(goodInn12_zero.length)]
 const getInn12_zero2 = () => goodInn12_zero2[getRandomInt(goodInn12_zero2.length)]
-const getInn12_zerozero = () => goodInn12_zerozero[getRandomInt(goodInn12_zerozero.length)]
+const getInn12_zeroZero = () => goodInn12_zeroZero[getRandomInt(goodInn12_zeroZero.length)]
 
 
 const getBadLongInn11 = () => String(getInn10()) + '1'
@@ -96,20 +96,23 @@ describe('Проверяем функцию валидации ИНН', () => {
     });
 
     it('Проверяем верный 12 значный ИНН с нулевыми контрольными числами', () => {
-        expect(testFunction(getInn12_zerozero())).toBeTruthy();    });    
+        expect(testFunction(getInn12_zeroZero())).toBeTruthy();    });    
 
     it('Проверяем не верный 10 значный ИНН по контрольной сумме', () => {
-        expect(testFunction(getInnBadCRCPos(getInn10()))).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn10_zero()))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn10(), 9))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn10_zero(), 9))).toBeFalsy();
     });
 
-    it('Проверяем не верный 12 значный ИНН по контрольной сумме', () => {
-        expect(testFunction(getInnBadCRCPos(getInn12()) )).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn12_zero()) )).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn12_zerozero()) )).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn12(), -2))).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn12_zero2(), -2))).toBeFalsy();
-        expect(testFunction(getInnBadCRCPos(getInn12_zerozero(), -2))).toBeFalsy();
+    it('Проверяем не верный 12 значный ИНН по контрольной сумме 1', () => {
+        expect(testFunction(getInnBadCRCPos(getInn12(), 11))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zero(), 11) )).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zeroZero(), 11) )).toBeFalsy();        
+    });
+
+    it('Проверяем не верный 12 значный ИНН по контрольной сумме 2', () => {
+        expect(testFunction(getInnBadCRCPos(getInn12(), 10))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zero2(), 10))).toBeFalsy();
+        expect(testFunction(getInnBadCRCPos(getInn12_zeroZero(), 10))).toBeFalsy();
     });
 
     it('Проверяем не верный ИНН по длине', () => {
